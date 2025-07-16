@@ -3,7 +3,7 @@ name: Name of the workflow else relative path
 on: [push]
 run-name: Installer test
 jobs:
-   first_job:
+  first_job:
     runs-on: ubuntu-latest
     permissions:
      contents: read
@@ -24,6 +24,26 @@ jobs:
           run: | 
            chmod +x ./core/scripts/installer.sh
            ./core/scripts/installer.sh
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: Piglet
+            path: abc.txt
+
+  download_artifact:
+        runs-on: ubuntu-latest
+        needs: first_job
+        steps:
+            - name: Download the Artifact
+              uses: actions/download-artifact@v4
+              with:
+                name: Piglet
+                path: abc.txt
+            - name: Read the Artifact
+              run: cat abc.txt
+
+        
+
 
 
 
