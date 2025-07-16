@@ -1,0 +1,12 @@
+name: Name of the workflow else relative path
+
+on: [push]
+
+jobs:
+   first_job:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Name of the Step
+          run: echo "Just Echoing"
+        - name: Listing 
+          run: ls
