@@ -17,14 +17,13 @@ jobs:
         - name: Just Listing with multiline
           run: |
             echo "Just Echoing"
-            ls -ltra
+            ls -ltra core
             echo "------------"
             ls ../
         - name: install and run figlet
-          run: |
-            sudo apt install figlet
-            figlet "GH200" >> abc.txt
-            sleep 5
-            cat abc.txt
+          run: | 
+           chmod +x i./scripts/installer.sh
+           ./scripts/installer.sh
+
 
 
