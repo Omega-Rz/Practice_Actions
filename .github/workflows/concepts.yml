@@ -1,7 +1,7 @@
 name: Name of the workflow else relative path
 
 on: [push]
-
+run-name: Installer test
 jobs:
    first_job:
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
           run: |
             echo "Just Echoing"
             ls -ltra
-            echo"------------"
+            echo "------------"
             ls ../
         - name: install and run figlet
           run: |
