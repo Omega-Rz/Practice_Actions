@@ -22,8 +22,8 @@ jobs:
             ls ../
         - name: install and run figlet
           run: | 
-           chmod +x ./scripts/installer.sh
-           ./scripts/installer.sh
+           chmod +x ./core/scripts/installer.sh
+           ./core/scripts/installer.sh
 
 
 
