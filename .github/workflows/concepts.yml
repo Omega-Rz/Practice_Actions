@@ -38,7 +38,6 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                 name: Piglet
-                path: abc.txt
             - name: Read the Artifact
               run: cat abc.txt
 
