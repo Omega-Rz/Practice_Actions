@@ -5,12 +5,26 @@ on: [push]
 jobs:
    first_job:
     runs-on: ubuntu-latest
+    permissions:
+     contents: read
     steps:
         - name: Checkout Repo
           uses: actions/checkout@v4
+          with:
+            path: core
+            fetch-depth: 0
 
-        - name: Name of the Step
-          run: echo "Just Echoing"
-          
-        - name: Listing 
-          run: ls
+        - name: Just Listing with multiline
+          run: |
+            echo "Just Echoing"
+            ls -ltra
+            echo"------------"
+            ls ../
+        - name: install and run figlet
+          run: |
+            sudo apt install figlet
+            figlet "GH200" >> abc.txt
+            sleep 5
+            cat abc.txt
+
+
