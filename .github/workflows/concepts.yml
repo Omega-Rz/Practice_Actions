@@ -1,6 +1,6 @@
 name: Name of the workflow else relative path
 
-on: [push]
+on: [push, workflow_dispatch]
 run-name: Installer test
 env:
   WORKFLOW_LEVEL: workflow
