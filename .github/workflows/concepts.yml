@@ -2,6 +2,10 @@ name: Name of the workflow else relative path
 
 on: [push]
 run-name: Installer test
+env:
+  WORKFLOW_LEVEL: workflow
+  JOB_LEVEL_VAR: job1
+  STEP_LEVEL_VAR: step2
 jobs:
   first_job:
     runs-on: ubuntu-latest
@@ -20,6 +24,9 @@ jobs:
             ls -ltra core
             echo "------------"
             ls ../
+            echo ${{ env.WORKFLOW_LEVEL }}
+            echo ${{ env.JOB_LEVEL_VAR }}
+            echo ${{ env.STEP_LEVEL_VAR }}
         - name: install and run figlet
           run: | 
            chmod +x ./core/scripts/installer.sh
@@ -33,13 +40,23 @@ jobs:
   download_artifact:
         runs-on: ubuntu-latest
         needs: first_job
+        env:
+          JOB_LEVEL_VAR: job
+          STEP_LEVEL_VAR: step1
         steps:
             - name: Download the Artifact
               uses: actions/download-artifact@v4
               with:
                 name: Piglet
             - name: Read the Artifact
-              run: cat abc.txt
+              env:
+                STEP_LEVEL_VAR: step
+              run: |
+                cat abc.txt
+                echo ${{ env.STEP_LEVEL_VAR }}
+                echo ${{ env.JOB_LEVEL_VAR }}
+                echo ${{ env.WORKFLOW_LEVEL }}
+
 
         
 
