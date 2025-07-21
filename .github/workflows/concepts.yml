@@ -11,7 +11,9 @@ concurrency:
   #For example, if you push multiple commits in quick succession, only the latest commit will trigger a run.
   #This is useful for workflows that are triggered by push events, such as CI/CD workflows.
   #If you want to allow multiple runs of the same workflow to run at the same time,
-  #you can remove this concurrency setting or set `cancel-in-progress` to false.  
+  #you can remove this concurrency setting or set `cancel-in-progress` to false.
+  #It work across branches as well.
+  #It work across different workflows as well in same branch or repo.
   cancel-in-progress: true
 run-name: Installer test
 env:
@@ -23,6 +25,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
      contents: read
+    timeout-minutes: 1
+    #This will set the timeout for the entire job to 1 minute.
+    #If any step in the job takes longer than 1 minute, the job will be cancelled.
+    #You can also set a timeout for individual steps using the `timeout-minutes`
+    #parameter in the step definition.
+    #Even if a step has timeout-minutes: 2, it cannot overrule the job’s 1-minute limit.
     steps:
         - name: Checkout Repo
           uses: actions/checkout@v4
@@ -39,6 +47,8 @@ jobs:
             echo ${{ env.WORKFLOW_LEVEL }}
             echo ${{ env.JOB_LEVEL_VAR }}
             echo ${{ env.STEP_LEVEL_VAR }}
+            sleep 1
+            #Default timeout for a step is 6 hours, you can change it to 1 minute
         - name: install and run figlet
           run: | 
            chmod +x ./core/scripts/installer.sh
