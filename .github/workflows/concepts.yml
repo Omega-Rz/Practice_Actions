@@ -57,8 +57,8 @@ jobs:
                 echo ${{ env.JOB_LEVEL_VAR }}
                 echo ${{ env.WORKFLOW_LEVEL }}
                 echo $STEP_LEVEL_VAR
-                echo $env.JOB_LEVEL_VAR
-                echo $env.WORKFLOW_LEVEL
+                echo $JOB_LEVEL_VAR
+                echo $WORKFLOW_LEVEL
                 echo ${{ vars.REPO_LVL_VAR }}
 
 
