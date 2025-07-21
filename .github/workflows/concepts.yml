@@ -30,7 +30,7 @@ jobs:
         - name: install and run figlet
           run: | 
            chmod +x ./core/scripts/installer.sh
-           ./core/scripts/installer.sh
+           ./core/scripts/installer.sh ${{ secrets.password1 }}
         - name: Upload Artifact
           uses: actions/upload-artifact@v4
           with:
