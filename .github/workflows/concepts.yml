@@ -1,7 +1,12 @@
 name: Name of the workflow else relative path
 
-on: [push, workflow_dispatch]
+#on: [push, workflow_dispatch]
 #This event will only trigger a workflow run if the workflow file exists on the default branch.
+on: 
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 concurrency:
   group: workflow-concepts
@@ -60,16 +65,20 @@ jobs:
             path: abc.txt
 
   download_artifact:
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         needs: first_job
         env:
           JOB_LEVEL_VAR: job
           STEP_LEVEL_VAR: step1
+        strategy:
+          matrix:
+            os: [ubuntu-latest, Ubuntu 22.04]
+            images: [hello-world, alpine]
         steps:
             - name: Download the Artifact
               uses: actions/download-artifact@v4
               with:
-                name: Piglet
+                name: Figlet
             - name: Read the Artifact
               env:
                 STEP_LEVEL_VAR: step
@@ -82,6 +91,9 @@ jobs:
                 echo $JOB_LEVEL_VAR
                 echo $WORKFLOW_LEVEL
                 echo ${{ vars.REPO_LVL_VAR }}
+                docker --version
+                docker info
+                docker run ${{ matrix.images }} echo "Hello from ${{ matrix.os }}"
 
 
         
