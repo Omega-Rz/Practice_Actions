@@ -78,7 +78,7 @@ jobs:
             - name: Download the Artifact
               uses: actions/download-artifact@v4
               with:
-                name: Figlet
+                name: Piglet
             - name: Read the Artifact
               env:
                 STEP_LEVEL_VAR: step
