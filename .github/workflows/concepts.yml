@@ -65,8 +65,16 @@ jobs:
             path: abc.txt
 
   download_artifact:
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         needs: first_job
+        if: github.ref == 'refs/heads/main' #This will run the job only if the push is to the main branch
+        #This will run the job only if the first_job is successful.
+        #This is useful for workflows that have multiple jobs and you want to run a job only
+        #if a previous job is successful.
+        #You can also use `if: success()` to run the job only if all previous jobs are successful.
+        #You can also use `if: failure()` to run the job only if a previous job has failed.
+        #You can also use `if: always()` to run the job regardless of the success or failure of previous jobs.
+        #You can also use `if: cancelled()` to run the job only if a previous job was cancelled.
         env:
           JOB_LEVEL_VAR: job
           STEP_LEVEL_VAR: step1
@@ -77,21 +85,24 @@ jobs:
 #fail-fast is used to stop the job if any step fails.
 #fail-fast is useful for speeding up the workflow by not running unnecessary steps.
 #max-parallel is used to limit the number of jobs that can run in parallel.
-        strategy:
-          fail-fast: true
-          max-parallel: 2
-          matrix:
-            os: [ubuntu-latest, Ubuntu 22.04]
-            images: [hello-world, alpine]
-            exclude:
-              - os: [ubuntu-latest, Ubuntu 22.04]
-                images: hello-world
+        # strategy:
+        #   fail-fast: true
+        #   max-parallel: 2
+        #   matrix:
+        #     os: [ubuntu-latest, Ubuntu 22.04]
+        #     images: [hello-world, alpine]
+        #     exclude:
+        #       - os: [ubuntu-latest, Ubuntu 22.04]
+        #         images: hello-world
         steps:
             - name: Download the Artifact
               uses: actions/download-artifact@v4
               with:
                 name: Piglet
             - name: Read the Artifact
+              if: ${{ success() }}
+              #This will run the step only if the previous step was successful.
+              
               env:
                 STEP_LEVEL_VAR: step
               run: |
