@@ -70,10 +70,22 @@ jobs:
         env:
           JOB_LEVEL_VAR: job
           STEP_LEVEL_VAR: step1
+#matrix is used to run the same job on multiple OS and images
+# It is useful for testing the same code on different environments.
+# It is also useful for running the same code on different versions of the same OS. 
+#exclude is used to exclude a specific combination of OS and image from the matrix.
+#fail-fast is used to stop the job if any step fails.
+#fail-fast is useful for speeding up the workflow by not running unnecessary steps.
+#max-parallel is used to limit the number of jobs that can run in parallel.
         strategy:
+          fail-fast: true
+          max-parallel: 2
           matrix:
             os: [ubuntu-latest, Ubuntu 22.04]
             images: [hello-world, alpine]
+            exclude:
+              - os: [ubuntu-latest, Ubuntu 22.04]
+                images: hello-world
         steps:
             - name: Download the Artifact
               uses: actions/download-artifact@v4
@@ -93,7 +105,7 @@ jobs:
                 echo ${{ vars.REPO_LVL_VAR }}
                 docker --version
                 docker info
-                docker run ${{ matrix.images }} echo "Hello from ${{ matrix.os }}"
+                docker run ${{ matrix.images }}
 
 
         
