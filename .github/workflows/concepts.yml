@@ -83,7 +83,6 @@ jobs:
         #This will run the job only if the first_job is successful.
         #This is useful for workflows that have multiple jobs and you want to run a job only
         #if a previous job is successful.
-        #You can also use `if: success()` to run the job only if all previous jobs are successful.
         #You can also use `if: failure()` to run the job only if a previous job has failed.
         #You can also use `if: always()` to run the job regardless of the success or failure of previous jobs.
         #You can also use `if: cancelled()` to run the job only if a previous job was cancelled.
@@ -129,6 +128,7 @@ jobs:
                 docker --version
                 docker info
                 docker run ${{ matrix.images }}
+                echo "Hi"
 
 
 
