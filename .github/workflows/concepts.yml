@@ -126,8 +126,6 @@ jobs:
                 echo $WORKFLOW_LEVEL
                 echo ${{ vars.REPO_LVL_VAR }}
                 docker --version
-                docker info
-                docker run ${{ matrix.images }}
                 echo "Hi"
 
 
