@@ -17,6 +17,16 @@ on:
     paths-ignore: 
       - 'README.md' #This will ignore the README.md file in the root of the repository.
   workflow_dispatch:
+  pull_request:
+    types: 
+      - synchronize
+      - closed
+
+    branches: 
+      - main
+      - '!feature/*' #This will exclude all branches that start with feature/
+    paths-ignore: 
+      - 'README.md' #This will ignore the README.md file in the root of the repository.
 
 
 concurrency:
