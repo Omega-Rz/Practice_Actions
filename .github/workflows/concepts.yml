@@ -5,9 +5,30 @@ name: Name of the workflow else relative path
 #This event will only trigger a workflow run if the workflow file exists on the default branch.
 on: 
   push:
-    branches:
+    branches: 
       - main
+      - '!feature/*' #This will exclude all branches that start with feature/
+    branches-ignore: 
+      - 'feature/**' #This will ignore all branches that start with feature/
+      - 'feature/*' #This will ignore all branches that start with feature
+# /** vs /*
+# /** will match all branches that start with feature/ and any sub-branches, such as feature/branch1, feature/branch2, etc.
+# /* will match only branches that start with feature/ and not any sub-branches, such as feature/branch1, feature/branc
+    paths-ignore: 
+      - 'README.md' #This will ignore the README.md file in the root of the repository.
   workflow_dispatch:
+  pull_request:
+    types: 
+      - opened
+      - synchronize
+      - reopened
+      - closed
+
+    branches: 
+      - main
+      - '!feature/*' #This will exclude all branches that start with feature/
+    paths-ignore: 
+      - 'README.md' #This will ignore the README.md file in the root of the repository.
 
 concurrency:
   group: workflow-concepts
@@ -21,7 +42,8 @@ concurrency:
   #It work across branches as well.
   #It work across different workflows as well in same branch or repo.
   cancel-in-progress: true
-run-name: Installer test
+run-name: Installer test with ${{ github.event_name }} event
+#This will set the name of the workflow run to "Installer test with push event" or
 env:
   WORKFLOW_LEVEL: workflow
   JOB_LEVEL_VAR: job1
