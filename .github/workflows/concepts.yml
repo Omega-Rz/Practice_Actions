@@ -8,9 +8,9 @@ on:
     branches: 
       - main
       - '!feature/*' #This will exclude all branches that start with feature/
-    branches-ignore: 
-      - 'feature/**' #This will ignore all branches that start with feature/
-      - 'feature/*' #This will ignore all branches that start with feature
+    # branches-ignore: 
+    #   - 'feature/**' #This will ignore all branches that start with feature/
+    #   - 'feature/*' #This will ignore all branches that start with feature
 # /** vs /*
 # /** will match all branches that start with feature/ and any sub-branches, such as feature/branch1, feature/branch2, etc.
 # /* will match only branches that start with feature/ and not any sub-branches, such as feature/branch1, feature/branc
