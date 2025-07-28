@@ -8,5 +8,5 @@ else
 fi
 sudo apt install figlet
 figlet "GH200" >> abc.txt
-sleep 5
+sleep 2
 
